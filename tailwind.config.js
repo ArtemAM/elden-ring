@@ -10,6 +10,9 @@ export default {
         'robert-medium': ['robert-medium', 'sans-serif'],
         'robert-regular': ['robert-regular', 'sans-serif'],
       },
+      colors: {
+        gold: '#c19d53',
+      },
     },
   },
   plugins: [],
