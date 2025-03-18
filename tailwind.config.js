@@ -13,6 +13,12 @@ export default {
       colors: {
         gold: '#c19d53',
       },
+      screens: {
+        mobile: '320px',
+        tablet: '768px',
+        laptop: '1024px',
+        desktop: '1440px',
+      },
     },
   },
   plugins: [],

@@ -41,4 +41,13 @@ body {
     font-family: 'Zentry';
     font-feature-settings: 'ss01' on;
   }
+  .hero-heading {
+    @apply font-zentry uppercase text-gold text-7xl tablet:right-10 tablet:text-8xl desktop:text-[10rem];
+  }
+  .hero-heading-position {
+    @apply absolute bottom-5 right-5 tablet:right-10 desktop:right-14;
+  }
+  .absolute-center {
+    @apply absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%];
+  }
 }
