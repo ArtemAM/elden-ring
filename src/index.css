@@ -50,4 +50,10 @@ body {
   .absolute-center {
     @apply absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%];
   }
+  .animated-title {
+    @apply font-zentry text-5xl uppercase leading-[.8] text-black tablet:text-7xl laptop:text-8xl;
+  }
+  .about-subtext {
+    @apply font-circular-web leading-5 text-sm text-center desktop:text-lg;
+  }
 }
