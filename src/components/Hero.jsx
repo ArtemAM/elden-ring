@@ -1,9 +1,11 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import { TiLocationArrow } from 'react-icons/ti'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import Button from './Button'
+import getTransformTilt from '../utils/getTransformTilt'
+import clsx from 'clsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -14,13 +16,8 @@ function Hero() {
   const [currentIndex, setCurrentIndex] = useState(1)
   const [isMouseMove, setIsMouseMove] = useState(false)
 
-  const handleMouseMove = useCallback(() => {
-    setIsMouseMove(true)
-  }, [])
-
   return (
     <section id="hero" className="relative w-screen h-screen">
-      <HeroIntro />
       <VideoFrame
         getVideoSrc={getVideoSrc}
         currentIndex={currentIndex}
@@ -28,8 +25,10 @@ function Hero() {
         setCurrentIndex={setCurrentIndex}
         isMouseMove={isMouseMove}
         setIsMouseMove={setIsMouseMove}
-        handleMouseMove={handleMouseMove}
-      />
+      >
+        <HeroIntro />
+        <HeroFooterTitle classContainer="!text-gold z-[10]" />
+      </VideoFrame>
       <HeroFooterTitle />
     </section>
   )
@@ -38,11 +37,11 @@ function Hero() {
 function HeroIntro() {
   return (
     <div className="absolute grid gap-5 left-5 top-20 z-10 tablet:left-10 tablet:top-24">
-      <div>
-        <h1 className="hero-heading special-font">
+      <div className="pointer-events-none">
+        <h1 className="hero-heading special-font pointer-events-none">
           Be <b>A</b> Part
         </h1>
-        <p className="max-w-72 text-sm text-white tablet:text-base desktop:text-2xl desktop:max-w-80">
+        <p className="max-w-72 text-sm text-white tablet:text-base desktop:text-2xl desktop:max-w-80 pointer-events-none">
           Enter the Metagame <br /> Unleash the Play Economy
         </p>
       </div>
@@ -57,16 +56,16 @@ function HeroIntro() {
   )
 }
 
-function HeroFooterTitle() {
+function HeroFooterTitle({ classContainer }) {
   return (
-    <>
-      <h2 className="hero-heading special-font hero-heading-position z-10">
-        El<b>d</b>en Ri<b>n</b>g
-      </h2>
-      <h2 className="hero-heading special-font hero-heading-position z-[-1] !text-black">
-        El<b>d</b>en Ri<b>n</b>g
-      </h2>
-    </>
+    <h2
+      className={clsx(
+        'hero-heading special-font hero-heading-position z-[-1] !text-black',
+        classContainer,
+      )}
+    >
+      El<b>d</b>en Ri<b>n</b>g
+    </h2>
   )
 }
 
@@ -77,9 +76,21 @@ function VideoFrame({
   totalVideos,
   isMouseMove,
   setIsMouseMove,
-  handleMouseMove,
+  children,
 }) {
+  const [transformStyle, setTransformStyle] = useState('')
   const videoFrameRef = useRef(null)
+
+  const handleMouseMove = (event) => {
+    setIsMouseMove(true)
+    const newTransform = getTransformTilt(
+      event,
+      videoFrameRef.current,
+      60,
+      1000,
+    )
+    setTransformStyle(newTransform)
+  }
 
   useGSAP(() => {
     gsap.set(videoFrameRef.current, {
@@ -104,6 +115,7 @@ function VideoFrame({
       onMouseMove={handleMouseMove}
       className="relative w-screen h-screen overflow-hidden"
     >
+      {children}
       <VideoContent
         getVideoSrc={getVideoSrc}
         currentIndex={currentIndex}
@@ -111,7 +123,7 @@ function VideoFrame({
         setCurrentIndex={setCurrentIndex}
         isMouseMove={isMouseMove}
         setIsMouseMove={setIsMouseMove}
-        handleMouseMove={handleMouseMove}
+        transform={transformStyle}
       />
     </div>
   )
@@ -124,6 +136,7 @@ function VideoContent({
   totalVideos,
   isMouseMove,
   setIsMouseMove,
+  transform,
 }) {
   const nextVideoRef = useRef(null)
   const currentVideoRef = useRef(null)
@@ -138,23 +151,26 @@ function VideoContent({
   // Появление miniVideo при движении мыши
   useEffect(() => {
     if (!isMouseMove) return
-    gsap.to(miniVideoRef.current, {
-      opacity: 1,
-      scale: 1.5,
-      duration: 1,
-      ease: 'power3.inOut',
-    })
-    const timeout = setTimeout(() => {
+    const mm = gsap.matchMedia()
+    mm.add('(min-width: 1024px)', () => {
       gsap.to(miniVideoRef.current, {
-        opacity: 0,
-        scale: 0.5,
+        opacity: 1,
+        scale: 1.5,
         duration: 1,
         ease: 'power3.inOut',
       })
-      setIsMouseMove(false)
-    }, 2000)
-    return () => clearTimeout(timeout)
-  }, [isMouseMove])
+      const timeout = setTimeout(() => {
+        gsap.to(miniVideoRef.current, {
+          opacity: 0,
+          scale: 0.5,
+          duration: 1,
+          ease: 'power3.inOut',
+        })
+        setIsMouseMove(false)
+      }, 2000)
+      return () => clearTimeout(timeout)
+    })
+  }, [isMouseMove, setIsMouseMove])
 
   useGSAP(
     () => {
@@ -179,6 +195,19 @@ function VideoContent({
         autoAlpha: 0,
         duration: 1.5,
         ease: 'power3.inOut',
+      })
+
+      const mm = gsap.matchMedia()
+      mm.add('(max-width: 1023px)', () => {
+        gsap.set(miniVideoRef.current, {
+          opacity: 1,
+        })
+        gsap.to(miniVideoRef.current, {
+          scale: 0.7,
+          duration: 1.5,
+          repeat: -1,
+          yoyo: true,
+        })
       })
     },
     { dependencies: [currentIndex], revertOnUpdate: true },
@@ -207,6 +236,7 @@ function VideoContent({
         >
           <video
             ref={nextVideoRef}
+            style={{ transform }}
             className="w-full h-full object-cover object-center scale-125"
             src={getVideoSrc(
               currentIndex === totalVideos ? 1 : currentIndex + 1,
