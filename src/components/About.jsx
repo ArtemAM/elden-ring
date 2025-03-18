@@ -1,4 +1,32 @@
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/all'
+
+gsap.registerPlugin(ScrollTrigger)
+
 function About() {
+  const clipContainerRef = useRef(null)
+  const maskClipContainerRef = useRef(null)
+  useGSAP(() => {
+    const revealClipAnimation = gsap.timeline({
+      scrollTrigger: {
+        trigger: clipContainerRef.current,
+        start: 'center center',
+        end: '+=800 center',
+        scrub: 0.5,
+        pin: true,
+        markers: true,
+      },
+    })
+    revealClipAnimation.to(maskClipContainerRef.current, {
+      width: '100%',
+      height: '100%',
+      top: '0%',
+      clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+    })
+  })
+
   return (
     <section id="about">
       <div className="container mx-auto grid gap-8 text-center pt-20 tablet:pt-32 laptop:gap-5">
@@ -7,8 +35,11 @@ function About() {
           Disc<b>o</b>ver the world's <br /> largest single <b>a</b>dventure
         </h2>
       </div>
-      <div className="relative w-screen h-screen">
-        <div className="mask-clip-path-about absolute left-1/2 translate-x-[-50%] top-[10%] z-20 h-[60vh] w-72 overflow-hidden rounded-3xl tablet:w-[50vw] laptop:w-96">
+      <div ref={clipContainerRef} className="relative w-screen h-screen">
+        <div
+          ref={maskClipContainerRef}
+          className="mask-clip-path-about absolute left-1/2 translate-x-[-50%] top-[15%] z-20 h-[60vh] w-72 overflow-hidden tablet:w-[50vw] laptop:w-96"
+        >
           <img
             className="object-cover object-center size-full"
             src="images/about.jpg"

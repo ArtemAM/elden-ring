@@ -56,4 +56,7 @@ body {
   .about-subtext {
     @apply font-circular-web leading-5 text-sm text-center desktop:text-lg;
   }
+  .mask-clip-path-about {
+    clip-path: polygon(43% 10%, 88% 1%, 100% 91%, 0 48%);
+  }
 }
