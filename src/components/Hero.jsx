@@ -42,7 +42,7 @@ function HeroIntro() {
           Be <b>A</b> Part
         </h1>
         <p className="max-w-72 text-sm text-white tablet:text-base desktop:text-2xl desktop:max-w-80 pointer-events-none">
-          Enter the Metagame <br /> Unleash the Play Economy
+          Enter the Metagame <br /> And become the Elden Lord
         </p>
       </div>
       <Button
