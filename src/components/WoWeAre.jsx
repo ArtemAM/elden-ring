@@ -66,6 +66,53 @@ function WhoWeAre() {
 }
 
 function DotImage({ imageIndex, classContainer }) {
+  const containerRef = useRef(null)
+  const imageRef = useRef(null)
+  const tlRef = useRef(null)
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        toggleActions: 'restart none none none',
+      },
+    })
+    tl.to(containerRef.current, {
+      scale: 1.2,
+      duration: 1.2,
+      yoyo: true,
+      repeat: 10,
+      ease: 'sine.inOut',
+    })
+    tlRef.current = tl
+  })
+
+  const handleMouseEnter = () => {
+    if (tlRef.current) tlRef.current.pause()
+    gsap.to(containerRef.current, {
+      width: '12rem',
+      height: '12rem',
+      duration: 0.8,
+    })
+    gsap.to(imageRef.current, {
+      opacity: 1,
+      duration: 0.2,
+      overwrite: true,
+    })
+  }
+  const handleMouseLeave = () => {
+    gsap.to(containerRef.current, {
+      width: '50%',
+      height: '50%',
+      duration: 0.8,
+    })
+    gsap.to(imageRef.current, {
+      opacity: 0,
+      duration: 0.8,
+      overwrite: true,
+    })
+  }
   return (
     <div
       className={clsx(
@@ -73,8 +120,14 @@ function DotImage({ imageIndex, classContainer }) {
         classContainer,
       )}
     >
-      <div className="absolute-center size-1/2 bg-black rounded-md overflow-hidden">
+      <div
+        ref={containerRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="absolute-center size-1/2 bg-black rounded-md overflow-hidden"
+      >
         <img
+          ref={imageRef}
           className="absolute-center object-cover object-center size-full opacity-0"
           src={`images/whoweare-${imageIndex}.jpg`}
           alt=""
