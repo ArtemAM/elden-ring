@@ -1,5 +1,11 @@
 import { useRef } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/all'
+import clsx from 'clsx'
 import AnimatedSubtitle from './AnimatedSubtitle'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function WhoWeAre() {
   return (
@@ -35,9 +41,14 @@ function WhoWeAre() {
   )
 }
 
-function DotImage({ imageIndex }) {
+function DotImage({ imageIndex, classContainer }) {
   return (
-    <div className="h-10 w-10 relative cursor-pointer tablet:h-14 tablet:w-14 laptop:h-24 laptop:w-24">
+    <div
+      className={clsx(
+        'h-10 w-10 relative cursor-pointer tablet:h-14 tablet:w-14 laptop:h-24 laptop:w-24',
+        classContainer,
+      )}
+    >
       <div className="absolute-center size-1/2 bg-black rounded-md overflow-hidden">
         <img
           className="absolute-center object-cover object-center size-full opacity-0"
@@ -52,6 +63,24 @@ function DotImage({ imageIndex }) {
 function InteractiveTitle({ title }) {
   const containerRef = useRef(null)
   let dotCounter = 0
+
+  useGSAP(
+    () => {
+      const animatedWordsTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top bottom',
+          toggleActions: 'restart none none reverse',
+        },
+      })
+      animatedWordsTl.to('.animated-word', {
+        opacity: 1,
+        stagger: 0.07,
+        duration: 0,
+      })
+    },
+    { scope: containerRef },
+  )
 
   const content = title.split('<br />').map((line, lineIndex) => (
     <span
@@ -68,10 +97,18 @@ function InteractiveTitle({ title }) {
               <DotImage
                 key={`dot-${lineIndex}-${wordIndex}`}
                 imageIndex={dotCounter}
+                classContainer="animated-word"
               />
             )
           }
-          return <span key={`word-${lineIndex}-${wordIndex}`}>{word}</span>
+          return (
+            <span
+              key={`word-${lineIndex}-${wordIndex}`}
+              className="animated-word"
+            >
+              {word}
+            </span>
+          )
         })}
     </span>
   ))
