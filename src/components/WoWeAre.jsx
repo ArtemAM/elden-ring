@@ -8,9 +8,33 @@ import AnimatedSubtitle from './AnimatedSubtitle'
 gsap.registerPlugin(ScrollTrigger)
 
 function WhoWeAre() {
+  const containerRef = useRef(null)
+
+  useGSAP(() => {
+    gsap.set(containerRef.current, {
+      transform:
+        'translate3d(-110px, 52px, -60px) rotateY(50deg) rotateX(-20deg)',
+      transformOrigin: '-50% -50% -150px',
+    })
+    const revealContainerTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        toggleActions: 'restart none none reverse',
+      },
+    })
+    revealContainerTl.to(containerRef.current, {
+      transform: 'translate3d(0px, 0px, 0px) rotateY(0deg) rotateX(0deg)',
+      duration: 1.3,
+    })
+  })
+
   return (
     <section id="who-we-are" className="w-dvw bg-white">
-      <div className="flex-center relative py-20 px-5 tablet:py-32">
+      <div
+        ref={containerRef}
+        className="flex-center relative py-20 px-5 tablet:py-32"
+      >
         <div className="text-black">
           <div className="grid justify-items-center gap-10 text-center">
             <AnimatedSubtitle subtitle="who we are" />
