@@ -59,4 +59,10 @@ body {
   .mask-clip-path-about {
     clip-path: polygon(43% 10%, 88% 1%, 100% 91%, 0 48%);
   }
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  .animated-word {
+    opacity: 0;
+  }
 }

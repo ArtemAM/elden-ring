@@ -2,12 +2,14 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
+import AnimatedTitle from './AnimatedTitle'
 
 gsap.registerPlugin(ScrollTrigger)
 
 function About() {
   const clipContainerRef = useRef(null)
   const maskClipContainerRef = useRef(null)
+  const sectionRef = useRef(null)
   useGSAP(() => {
     const revealClipAnimation = gsap.timeline({
       scrollTrigger: {
@@ -16,7 +18,6 @@ function About() {
         end: '+=800 center',
         scrub: 0.5,
         pin: true,
-        markers: true,
       },
     })
     revealClipAnimation.to(maskClipContainerRef.current, {
@@ -28,12 +29,10 @@ function About() {
   })
 
   return (
-    <section id="about">
+    <section id="about" ref={sectionRef}>
       <div className="container mx-auto grid gap-8 text-center pt-20 tablet:pt-32 laptop:gap-5">
         <p className="font-general text-sm uppercase">Welcome to Elden Ring</p>
-        <h2 className="animated-title special-font">
-          Disc<b>o</b>ver the world's <br /> largest single <b>a</b>dventure
-        </h2>
+        <AnimatedTitle title="Disc<b>o</b>ver the world's <br /> largest single <b>a</b>dventure" />
       </div>
       <div ref={clipContainerRef} className="relative w-screen h-screen">
         <div
