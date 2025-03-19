@@ -31,7 +31,7 @@ function WhoWeAre() {
   })
 
   return (
-    <section id="who-we-are" className="w-dvw bg-white">
+    <section id="who-we-are" className="w-dvw bg-white overflow-hidden">
       <div
         ref={containerRef}
         className="flex-center relative py-20 px-5 tablet:py-32"
