@@ -30,12 +30,12 @@ function About() {
   })
 
   return (
-    <section id="about" ref={sectionRef}>
-      <div className="container mx-auto grid gap-8 text-center pt-20 tablet:pt-32 laptop:gap-5">
+    <section id="about" ref={sectionRef} className="overflow-hidden">
+      <div className="container-custom grid gap-8 text-center pt-20 tablet:pt-32 laptop:gap-5">
         <AnimatedSubtitle subtitle="Welcome to Elden Ring" />
         <AnimatedTitle title="Disc<b>o</b>ver the world's <br /> largest single <b>a</b>dventure" />
       </div>
-      <div ref={clipContainerRef} className="relative w-screen h-screen">
+      <div ref={clipContainerRef} className="relative w-dvw h-screen">
         <div
           ref={maskClipContainerRef}
           className="mask-clip-path-about absolute left-1/2 translate-x-[-50%] top-[15%] z-20 h-[60vh] w-72 overflow-hidden tablet:w-[50vw] laptop:w-96"

@@ -17,7 +17,7 @@ function Hero() {
   const [isMouseMove, setIsMouseMove] = useState(false)
 
   return (
-    <section id="hero" className="relative w-screen h-screen">
+    <section id="hero" className="relative w-dvw h-screen">
       <VideoFrame
         getVideoSrc={getVideoSrc}
         currentIndex={currentIndex}
@@ -113,7 +113,7 @@ function VideoFrame({
     <div
       ref={videoFrameRef}
       onMouseMove={handleMouseMove}
-      className="relative w-screen h-screen overflow-hidden"
+      className="relative w-dvw h-screen overflow-hidden"
     >
       {children}
       <VideoContent
@@ -217,7 +217,7 @@ function VideoContent({
     <>
       <video
         ref={prevVideoRef}
-        className="absolute-center w-screen h-screen object-cover object-center"
+        className="absolute-center w-dvw h-screen object-cover object-center"
         muted
         loop
       />
