@@ -1,6 +1,7 @@
 import Hero from './components/Hero'
 import About from './components/About'
 import Features from './components/Features'
+import WhoWeAre from './components/WoWeAre'
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Hero />
       <About />
       <Features />
+      <WhoWeAre />
       {/* <section className="w-screen h-screen"></section> */}
     </main>
   )
