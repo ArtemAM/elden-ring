@@ -6,7 +6,7 @@ function AnimatedTitle({ title }) {
   const containerRef = useRef(null)
 
   const text = (
-    <div className="animated-title special-font flex flex-col">
+    <div className="animated-title special-font flex flex-col gap-3">
       {title.split('<br />').map((line, index) => (
         <span
           key={`line-${index}`}
