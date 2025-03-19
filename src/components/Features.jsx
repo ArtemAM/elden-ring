@@ -1,4 +1,10 @@
+import { useState, useRef } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/all'
 import clsx from 'clsx'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const cards = [
   {
@@ -64,8 +70,49 @@ function Features() {
 }
 
 function CardFeature({ title, description, src, classContainer }) {
+  const containerRef = useRef(null)
+  const videoRef = useRef(null)
+
+  useGSAP(() => {
+    gsap.set(containerRef.current, {
+      transformPerspective: 1000,
+      y: 100,
+      rotateX: -40,
+      transformOrigin: 'center top',
+    })
+    const revealAnimation = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'top bottom',
+        toggleActions: 'restart none none reverse',
+      },
+    })
+    revealAnimation.to(containerRef.current, {
+      y: 0,
+      rotateX: 0,
+      duration: 0.5,
+    })
+  })
+
+  const handleOnMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play()
+    }
+  }
+
+  const handeOnMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause()
+    }
+  }
   return (
-    <div className={clsx('relative size-full', classContainer)}>
+    <div
+      ref={containerRef}
+      onMouseEnter={handleOnMouseEnter}
+      onMouseLeave={handeOnMouseLeave}
+      className={clsx('relative size-full', classContainer)}
+    >
       <div className="relative p-5 size-full border-hsla rounded-xl overflow-hidden cursor-pointer">
         <div className="relative z-10 grid gap-3">
           <h1
@@ -77,6 +124,7 @@ function CardFeature({ title, description, src, classContainer }) {
           </p>
         </div>
         <video
+          ref={videoRef}
           className="absolute left-0 top-0 size-full object-cover object-center"
           src={src}
           loop
