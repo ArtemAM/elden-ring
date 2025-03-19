@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/all'
 import clsx from 'clsx'
 import AnimatedSubtitle from './AnimatedSubtitle'
+import ContainerTilt from './ContainerTilt'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -171,11 +172,17 @@ function InteractiveTitle({ title }) {
           if (word === '.') {
             dotCounter++
             return (
-              <DotImage
-                key={`dot-${lineIndex}-${wordIndex}`}
-                imageIndex={dotCounter}
-                classContainer="animated-word"
-              />
+              <ContainerTilt
+                key={`tilt-${wordIndex}`}
+                ratioTilt={20}
+                perspective={1000}
+              >
+                <DotImage
+                  key={`dot-${lineIndex}-${wordIndex}`}
+                  imageIndex={dotCounter}
+                  classContainer="animated-word"
+                />
+              </ContainerTilt>
             )
           }
           return (
