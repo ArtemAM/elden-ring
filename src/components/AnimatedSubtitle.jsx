@@ -35,7 +35,7 @@ function AnimatedSubtitle({ subtitle }) {
   return (
     <div
       ref={containerRef}
-      className="flex-center gap-2 font-general text-sm uppercase"
+      className="flex-center gap-2 font-general text-xs uppercase laptop:text-sm"
     >
       {words}
     </div>
