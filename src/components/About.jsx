@@ -3,6 +3,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import AnimatedTitle from './AnimatedTitle'
+import AnimatedSubtitle from './AnimatedSubtitle'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -31,7 +32,7 @@ function About() {
   return (
     <section id="about" ref={sectionRef}>
       <div className="container mx-auto grid gap-8 text-center pt-20 tablet:pt-32 laptop:gap-5">
-        <p className="font-general text-sm uppercase">Welcome to Elden Ring</p>
+        <AnimatedSubtitle subtitle="Welcome to Elden Ring" />
         <AnimatedTitle title="Disc<b>o</b>ver the world's <br /> largest single <b>a</b>dventure" />
       </div>
       <div ref={clipContainerRef} className="relative w-screen h-screen">
