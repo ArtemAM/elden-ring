@@ -15,4 +15,25 @@ function Features() {
   )
 }
 
+function CardFeature({ title, description, src }) {
+  return (
+    <div className="relative size-full">
+      <div className="relative p-5 size-full border-hsla rounded-xl overflow-hidden cursor-pointer">
+        <div className="relative z-10 grid gap-3">
+          <h1 className="card-title special-font">{title}</h1>
+          <p className="max-w-xs text-xs md:text-base font-circular-web text-white">
+            {description}
+          </p>
+        </div>
+        <video
+          className="absolute left-0 top-0 size-full object-cover object-center"
+          src={src}
+          loop
+          muted
+        />
+      </div>
+    </div>
+  )
+}
+
 export default Features

@@ -65,4 +65,10 @@ body {
   .animated-word {
     opacity: 0;
   }
+  .border-hsla {
+    border: 1px solid hsla(0, 0%, 100%, 0.2);
+  }
+  .card-title {
+    @apply uppercase md:text-6xl text-4xl font-black font-zentry text-white;
+  }
 }
