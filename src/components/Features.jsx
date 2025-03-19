@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/all'
-import clsx from 'clsx'
+import ContainerTilt from './ContainerTilt'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -55,13 +55,19 @@ function Features() {
         </div>
         <div className="grid grid-cols-4 grid-area-mobile gap-4 py-16 tablet:grid-cols-2 tablet:gap-8 tablet:grid-area laptop:py-32 laptop:px-10">
           {cards.map((card) => (
-            <CardFeature
-              key={card.id}
-              title={card.title}
-              description={card.description}
-              src={card.src}
+            <ContainerTilt
+              key={`tilt-${card.id}`}
               classContainer={card.classContainer}
-            />
+              ratioTilt={10}
+              perspective={700}
+            >
+              <CardFeature
+                key={card.id}
+                title={card.title}
+                description={card.description}
+                src={card.src}
+              />
+            </ContainerTilt>
           ))}
         </div>
       </div>
@@ -69,7 +75,7 @@ function Features() {
   )
 }
 
-function CardFeature({ title, description, src, classContainer }) {
+function CardFeature({ title, description, src }) {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -97,12 +103,20 @@ function CardFeature({ title, description, src, classContainer }) {
 
   const handleOnMouseEnter = () => {
     if (videoRef.current) {
+      gsap.to(containerRef.current, {
+        scale: 0.95,
+        duration: 0.8,
+      })
       videoRef.current.play()
     }
   }
 
   const handeOnMouseLeave = () => {
     if (videoRef.current) {
+      gsap.to(containerRef.current, {
+        scale: 1,
+        duration: 0.8,
+      })
       videoRef.current.pause()
     }
   }
@@ -111,7 +125,7 @@ function CardFeature({ title, description, src, classContainer }) {
       ref={containerRef}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handeOnMouseLeave}
-      className={clsx('relative size-full', classContainer)}
+      className="relative size-full"
     >
       <div className="relative p-5 size-full border-hsla rounded-xl overflow-hidden cursor-pointer">
         <div className="relative z-10 grid gap-3">
