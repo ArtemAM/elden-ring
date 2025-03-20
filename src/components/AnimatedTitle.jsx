@@ -1,8 +1,9 @@
 import { useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import clsx from 'clsx'
 
-function AnimatedTitle({ title }) {
+function AnimatedTitle({ title, classContainer }) {
   const containerRef = useRef(null)
 
   const text = (
@@ -10,7 +11,10 @@ function AnimatedTitle({ title }) {
       {title.split('<br />').map((line, index) => (
         <span
           key={`line-${index}`}
-          className="flex-center max-w-full flex-wrap gap-3"
+          className={clsx(
+            'flex-center max-w-full flex-wrap gap-3',
+            classContainer,
+          )}
         >
           {line
             .trim()
