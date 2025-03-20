@@ -1,5 +1,8 @@
 import clsx from 'clsx'
+import gsap from 'gsap'
 import AnimatedTitle from './AnimatedTitle'
+import ContainerTilt from './ContainerTilt'
+import { useRef } from 'react'
 
 function News() {
   return (
@@ -37,11 +40,36 @@ function News() {
 }
 
 function CardNews({ src, date, description, classContainer }) {
+  const containerImageRef = useRef(null)
+  const handleOnMouseEnter = () => {
+    if (containerImageRef.current) {
+      gsap.to(containerImageRef.current, {
+        scale: 0.95,
+        duration: 0.6,
+      })
+    }
+  }
+
+  const handeOnMouseLeave = () => {
+    if (containerImageRef.current) {
+      gsap.to(containerImageRef.current, {
+        scale: 1,
+        duration: 0.6,
+      })
+    }
+  }
   return (
     <div className={clsx('grid gap-5 w-2/3 tablet:w-full', classContainer)}>
-      <div className="rounded-lg overflow-hidden">
-        <img className="object-cover object-center" src={src} alt="" />
-      </div>
+      <ContainerTilt ratioTilt={10} perspective={700}>
+        <div
+          ref={containerImageRef}
+          onMouseEnter={handleOnMouseEnter}
+          onMouseLeave={handeOnMouseLeave}
+          className="rounded-lg overflow-hidden cursor-pointer"
+        >
+          <img className="object-cover object-center" src={src} alt="" />
+        </div>
+      </ContainerTilt>
       <div className="flex flex-row-reverse gap-10 tablet:flex-row">
         <span className="font-general text-sm font-bold">{date}</span>
         <p className="text-sm tablet:text-xl">{description}</p>
