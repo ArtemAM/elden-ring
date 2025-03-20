@@ -2,6 +2,7 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Features from './components/Features'
 import WhoWeAre from './components/WoWeAre'
+import News from './components/News'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <About />
       <Features />
       <WhoWeAre />
+      <News />
       {/* <section className="w-screen h-screen"></section> */}
     </main>
   )
