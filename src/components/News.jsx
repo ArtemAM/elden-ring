@@ -20,18 +20,15 @@ function News() {
         </div>
         <div className="grid gap-10 tablet:basis-1/2">
           <CardNews
-            src="images/whoweare-1.jpg"
-            date="09.05.2024"
-            description="Metagame Portal Bridging Human & AI in the Global Play
-          Economy"
+            src="images/news-2.webp"
+            date="30.05.2025"
+            description="The sun has set, and in the endless dusk, new horrors rise to claim the throne."
             classContainer="justify-self-end"
           />
           <CardNews
-            src="images/whoweare-1.jpg"
-            date="09.05.2024"
-            description="Metagame Portal Bridging Human & AI in the Global Play
-          Economy"
-            classContainer="justify-self-end"
+            src="images/news-1.jpg"
+            date="21.06.2024"
+            description="Unravel the fate of Mikella and plunge into a dark legend that will change your history"
           />
         </div>
       </div>
