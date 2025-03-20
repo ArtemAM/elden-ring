@@ -1,19 +1,54 @@
 import clsx from 'clsx'
 import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/all'
 import AnimatedTitle from './AnimatedTitle'
 import ContainerTilt from './ContainerTilt'
 import { useRef } from 'react'
 
+gsap.registerPlugin(ScrollTrigger)
+
 function News() {
+  const containerRef = useRef(null)
+  const descriptionRef = useRef(null)
+
+  useGSAP(() => {
+    const revealTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'bottom',
+        toggleActions: 'restart none none reverse',
+      },
+    })
+    revealTl.set(descriptionRef.current, {
+      opacity: 0,
+    })
+    revealTl.to(
+      descriptionRef.current,
+      {
+        opacity: 1,
+        duration: 1,
+      },
+      '+=0.5',
+    )
+  })
+
   return (
     <section id="news">
-      <div className="flex flex-col justify-between gap-10 py-20 overflow-hidden px-2 tablet:flex-row tablet:py-32 tablet:px-8 tablet:container tablet:mx-auto desktop:px-40">
-        <div className="flex flex-col gap-5 basis-1/2">
+      <div
+        ref={containerRef}
+        className="flex flex-col justify-between gap-5 py-20 overflow-hidden px-2 tablet:flex-row tablet:py-32 tablet:px-8 tablet:container tablet:mx-auto desktop:px-40"
+      >
+        <div className="flex flex-col gap-5 basis-1/2 tablet:w-1/2">
           <AnimatedTitle
             title="Lat<b>e</b>st <b>u</b>pdates"
             classContainer="!justify-normal !items-start tablet:gap-0 tablet:flex-col leading-[0.8]"
           />
-          <p className="font-circular-web text-xs w-2/3 tablet:text-base">
+          <p
+            ref={descriptionRef}
+            className="font-circular-web text-xs w-2/3 tablet:text-base"
+          >
             Stay updated with the latest news, events, and updates in our
             ecosystem. Be part of our universe's growth and evolution.
           </p>
