@@ -1,12 +1,28 @@
-# React + Vite
+# Elden Ring
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание проекта
 
-Currently, two official plugins are available:
+**Elden Ring** — это сайт, посвящённый тематике игры Elden Ring. Проект находится в разработке, но вы уже можете посмотреть промежуточную версию сайта по [этой ссылке](https://artemam.github.io/elden-ring/).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Используемые технологии
 
-## Expanding the ESLint configuration
+- **React** — для создания пользовательского интерфейса.
+- **Tailwind CSS** — для стилизации.
+- **GSAP** — для создания плавных анимаций.
+- **ESLint** и **Prettier** — для поддержания качества и стандартизации кода.
+- **Vite** — для сборки и быстрого запуска проекта
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Установка и запуск проекта
+
+### **1. Склонировать репозиторий:**
+   ```sh
+   git clone https://github.com/artemam/elden-ring.git
+   ```
+### **2. Установить зависимости:** 
+```sh
+npm install
+```
+### **3. Запуск проекта:**
+```sh
+npm run dev
+```
